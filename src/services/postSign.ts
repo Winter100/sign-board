@@ -1,9 +1,8 @@
-interface PostResponseSignType {
-  message: string;
-}
+import { postSignsSchema, PostSignsType } from "./schema/sign-schema";
+
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const postSign = async (formData: FormData): Promise<PostResponseSignType> => {
+export const postSign = async (formData: FormData): Promise<PostSignsType> => {
   try {
     const response = await fetch(`${base_url}/api/v1/signs`, {
       method: "POST",
@@ -15,9 +14,11 @@ export const postSign = async (formData: FormData): Promise<PostResponseSignType
       throw new Error(data.message);
     }
 
-    const data: PostResponseSignType = await response.json();
+    const data: PostSignsType = await response.json();
 
-    return data;
+    const parsedData = postSignsSchema.parse(data);
+
+    return parsedData;
   } catch (e) {
     if (e instanceof Error) {
       console.error(e);

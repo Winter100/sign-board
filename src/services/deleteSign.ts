@@ -1,8 +1,15 @@
+import { deleteSignSchema, DeleteSignType } from "./schema/sign-schema";
+
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const deleteSign = async ({ id, password }: { id: string; password: string }) => {
+export const deleteSign = async ({
+  id,
+  password,
+}: {
+  id: string;
+  password: string;
+}): Promise<DeleteSignType> => {
   try {
-    console.log(password);
     const response = await fetch(`${base_url}/api/v1/signs/${encodeURIComponent(id)}`, {
       method: "DELETE",
       headers: {
@@ -12,14 +19,20 @@ export const deleteSign = async ({ id, password }: { id: string; password: strin
     });
 
     if (!response.ok) {
-      throw new Error("");
+      const data = await response.json();
+      throw new Error(data.message);
     }
 
-    const data = await response.json();
+    const data: DeleteSignType = await response.json();
 
-    return data;
+    const parsedData = deleteSignSchema.parse(data);
+
+    return parsedData;
   } catch (e) {
-    console.error(e);
+    if (e instanceof Error) {
+      console.error(e);
+      throw new Error(e.message);
+    }
     throw new Error("삭제에 실패했습니다.");
   }
 };
