@@ -1,7 +1,10 @@
 import { deleteSign } from "@/services/deleteSign";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { DeleteSignType } from "@/services/schema/sign-schema";
+import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
 
-export const useDeleteMutation = (handleClose: () => void) => {
+export const useDeleteMutation = (
+  handleClose: () => void
+): UseMutationResult<DeleteSignType, Error, { id: string; password: string }> => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["delete", "sign"],

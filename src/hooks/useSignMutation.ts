@@ -1,7 +1,10 @@
 import { postSign } from "@/services/postSign";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { PostSignsType } from "@/services/schema/sign-schema";
+import { useMutation, UseMutationResult, useQueryClient } from "@tanstack/react-query";
 
-export const useSignMutation = (handleClose: () => void) => {
+export const useSignMutation = (
+  handleClose: () => void
+): UseMutationResult<PostSignsType, Error, FormData> => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationKey: ["post", "signs"],
