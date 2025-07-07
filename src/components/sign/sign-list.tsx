@@ -68,11 +68,11 @@ const SignList = () => {
       {!hasNextPage && !isError && (
         <div
           className={cn(
-            "flex items-center justify-center text-2xl font-bold text-gray-900",
+            "flex items-center justify-center text-lg font-bold text-gray-900",
             data.pages[0].item.length < 1 && "min-h-[80dvh]"
           )}
         >
-          {data?.pages[0].item.length < 1 ? "서명이 없습니다" : "마지막 서명 입니다."}
+          {data?.pages[0].item.length < 1 ? "서명이 없습니다" : "마지막 서명입니다"}
         </div>
       )}
     </div>
